@@ -39,7 +39,12 @@ def byou(search_value, file_path):
     def click_button_and_extract_price(button_name, button_xpath):
         WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, button_xpath))
+        ).click()      
+
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//*[@id='content-hp']/main/div[1]/div[4]/ul/li[2]/button"))
         ).click()
+
 
         price_xpath = "//*[@id='selectedPrice']/div/span[1]"
         decimal_price_xpath = "//*[@id='selectedPrice']/div/span[2]/span[1]"
@@ -47,7 +52,7 @@ def byou(search_value, file_path):
         price = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, price_xpath))).text.replace(",", ".")
         decimal_price = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, decimal_price_xpath))).text
 
-        price_formatted = "€" + price + "." + decimal_price
+        price_formatted = "€" + price + "." + decimal_price.replace('€','')
         return {button_name: price_formatted}
 
     driver.get(url)
@@ -71,6 +76,7 @@ def byou(search_value, file_path):
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//*[@id='cataloguesBytel']/a"))
     ).click()
+    
 
     # Define XPaths for additional plans and extract their details
     additional_plans = [
@@ -95,7 +101,12 @@ def byou(search_value, file_path):
         plan_name = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, plan["name_xpath"]))).text
         plan_price = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, plan["price_xpath"]))).text.replace(",", ".")
         plan_decimal_price = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, plan["decimal_price_xpath"]))).text
-
+    
+        # Remove euro symbol if present and any trailing dots
+        plan_price = plan_price.replace("€", "").rstrip('.')
+        plan_decimal_price = plan_decimal_price.replace("€", "")
+    
+        # Format the price correctly
         price_formatted = "€" + plan_price + "." + plan_decimal_price
         plan_data[plan_name] = price_formatted
 
