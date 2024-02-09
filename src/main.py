@@ -9,15 +9,17 @@ Created on Sun Feb  4 16:31:25 2024
 
 from la_poste_mobile import la_poste_mobile
 from sfr import sfr
+from orange import orange
 import pandas as pd
 
 def main():
     
     df_la_poste = la_poste_mobile('La Poste Mobile', 'info.xlsx')
     df_sfr = sfr('SFR', 'info.xlsx')
+    df_orange = orange('Orange', 'info.xlsx')
     
     # Merge the DataFrames
-    merged_df = pd.concat([df_la_poste, df_sfr], axis=0)
+    merged_df = pd.concat([df_la_poste, df_sfr, df_orange], axis=0)
     
     # Fill NaN values with an empty string to display blank where there is no price
     merged_df.fillna('', inplace=True)
