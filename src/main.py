@@ -11,6 +11,7 @@ from la_poste_mobile import la_poste_mobile
 from sfr import sfr
 from orange import orange
 from byou import byou
+from sosh import sosh
 import pandas as pd
 
 def convert_to_mb(column_name):
@@ -34,9 +35,10 @@ def main():
     df_sfr = sfr('SFR', 'info.xlsx')
     df_orange = orange('Orange', 'info.xlsx')
     df_byou = byou('B&You', 'info.xlsx')
+    df_sosh = sosh('Sosh', 'info.xlsx')
     
     # Merge the DataFrames
-    merged_df = pd.concat([df_la_poste, df_sfr, df_orange, df_byou], axis=0)
+    merged_df = pd.concat([df_la_poste, df_sfr, df_orange, df_byou, df_sosh], axis=0)
     
     # Convert column names for sorting
     mb_values = {col: convert_to_mb(col) for col in merged_df.columns}
@@ -53,7 +55,7 @@ def main():
     merged_df.fillna('', inplace=True)
     
     # Export to Excel with column headers in bold
-    with pd.ExcelWriter('Results_Sorted.xlsx', engine='xlsxwriter') as writer:
+    with pd.ExcelWriter('Results.xlsx', engine='xlsxwriter') as writer:
         merged_df.to_excel(writer, sheet_name='Plans', index=True)
         
         workbook = writer.book
