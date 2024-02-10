@@ -41,10 +41,9 @@ def byou(search_value, file_path):
             EC.element_to_be_clickable((By.XPATH, button_xpath))
         ).click()      
 
-        WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//*[@id='content-hp']/main/div[1]/div[4]/ul/li[2]/button"))
-        ).click()
-
+        # WebDriverWait(driver, 10).until(
+        #     EC.element_to_be_clickable((By.XPATH, "//*[@id='content-hp']/main/div[1]/div[4]/ul/li[2]/button"))
+        # ).click()
 
         price_xpath = "//*[@id='selectedPrice']/div/span[1]"
         decimal_price_xpath = "//*[@id='selectedPrice']/div/span[2]/span[1]"
