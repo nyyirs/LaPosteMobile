@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 
@@ -26,8 +27,12 @@ def byou(search_value, file_path):
     """    
     #search_value = 'B&You'
     #file_path = 'info.xlsx'
+    
+    chrome_options = Options()
+    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])  # Suppresses DevTools logs
+    
     # Setup WebDriver
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install(), log_path='NUL'), options=chrome_options)
 
     # Load the data from the excel file to get the URL
     df = pd.read_excel(file_path, sheet_name='Sheet1')

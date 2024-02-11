@@ -12,6 +12,7 @@ from sfr import sfr
 from orange import orange
 from byou import byou
 from sosh import sosh
+from red import red
 import pandas as pd
 
 def convert_to_mb(column_name):
@@ -36,9 +37,10 @@ def main():
     df_orange = orange('Orange', 'info.xlsx')
     df_byou = byou('B&You', 'info.xlsx')
     df_sosh = sosh('Sosh', 'info.xlsx')
+    df_red = red('RED', 'info.xlsx')
     
     # Merge the DataFrames
-    merged_df = pd.concat([df_la_poste, df_sfr, df_orange, df_byou, df_sosh], axis=0)
+    merged_df = pd.concat([df_la_poste, df_sfr, df_orange, df_byou, df_sosh, df_red], axis=0)
     
     # Convert column names for sorting
     mb_values = {col: convert_to_mb(col) for col in merged_df.columns}
