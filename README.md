@@ -1,7 +1,7 @@
 # LaPosteMobile Data Plan Comparison Tool
 
 ## Overview
-The LaPosteMobile Data Plan Comparison Tool is a Python-based application designed to aggregate and compare mobile data plans from various providers in France. This tool aims to help users find the best mobile data plan that suits their needs by comparing plans from La Poste Mobile, SFR, Orange, B&You, Sosh, RED, Free, and NRJ Mobile.
+The LaPosteMobile Data Plan Comparison Tool is a Python-based application designed to aggregate and compare mobile data plans from various providers in France. This tool aims to help users find the best mobile data plan that suits their needs by comparing plans from La Poste Mobile, SFR, Orange, B&You...
 
 ## Features
 - **Data Plan Extraction**: Extracts mobile plan details and pricing information from different mobile providers.
