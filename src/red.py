@@ -71,17 +71,24 @@ def red(search_value, file_path):
 def click_button_and_extract_price(driver, button_name, button_xpath):
     price_xpath = "//*[@id='alPrice']/div/div/span[1]"
     
-    # Capture the initial text right before the click to ensure you have a baseline to compare against
-    initial_text = driver.find_element(By.XPATH, price_xpath).text
-    
-    time.sleep(1)
+    # Correctly capture the initial text using WebDriverWait
+    initial_text_element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, price_xpath))
+    )
+    initial_text = initial_text_element.text  # Now you get the text after ensuring the element is present
     
     # Ensure the button is clickable and then click it
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, button_xpath))
-    ).click()      
-
+    ).click()
     
+    # Define a custom wait condition to wait for the text to change
+    def text_has_changed(driver, xpath, old_text):
+        try:
+            return driver.find_element(By.XPATH, xpath).text != old_text
+        except:
+            return False
+
     # Now wait for the text at the price_xpath to change from its initial value
     WebDriverWait(driver, 10).until(lambda driver: text_has_changed(driver, price_xpath, initial_text))
     
