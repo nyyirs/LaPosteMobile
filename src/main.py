@@ -7,14 +7,7 @@ Created on Sun Feb  4 16:31:25 2024
 
 # main.py
 
-from la_poste_mobile import la_poste_mobile
-from sfr import sfr
-from orange import orange
-from byou import byou
-from sosh import sosh
-from red import red
-from free import free
-from nrj import nrj
+from modules import la_poste_mobile, sfr, orange, byou, sosh, red, free, nrj
 import pandas as pd
 
 def convert_to_mb(column_name):
@@ -34,14 +27,14 @@ def convert_to_mb(column_name):
 
 def main():
     # Assume these functions return DataFrames as per your setup
-    df_la_poste = la_poste_mobile('La Poste Mobile', 'info.xlsx')
-    df_sfr = sfr('SFR', 'info.xlsx')
-    df_orange = orange('Orange', 'info.xlsx')
-    df_byou = byou('B&You', 'info.xlsx')
-    df_sosh = sosh('Sosh', 'info.xlsx')
-    df_red = red('RED', 'info.xlsx')
-    df_free = free('Free', 'info.xlsx')
-    df_nrj = nrj('NRJ Mobile', 'info.xlsx')
+    df_la_poste = la_poste_mobile.la_poste_mobile('La Poste Mobile', 'info.xlsx')
+    df_sfr = sfr.sfr('SFR', 'info.xlsx')
+    df_orange = orange.orange('Orange', 'info.xlsx')
+    df_byou = byou.byou('B&You', 'info.xlsx')
+    df_sosh = sosh.sosh('Sosh', 'info.xlsx')
+    df_red = red.red('RED', 'info.xlsx')
+    df_free = free.free('Free', 'info.xlsx')
+    df_nrj = nrj.nrj('NRJ Mobile', 'info.xlsx')
     
     # Merge the DataFrames
     merged_df = pd.concat([df_la_poste, df_sfr, df_orange, df_byou, df_sosh, df_red, df_free, df_nrj], axis=0)
