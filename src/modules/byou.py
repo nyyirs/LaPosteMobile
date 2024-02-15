@@ -77,28 +77,36 @@ def byou(search_value, file_path):
         plan_data.update(click_button_and_extract_price(name, xpath))
 
     # Click to expand other forfaits, if needed
-    WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//*[@id='cataloguesBytel']/a"))
-    ).click()
+    element = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div[3]/main/div/div[2]/a'))
+    )
+    
+    # Click the element
+    element.click()
     
 
     # Define XPaths for additional plans and extract their details
     additional_plans = [
         {
-            "name_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[1]/div/div[1]/p",
-            "price_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[1]/div/div[1]/div/div[1]/span[1]",
-            "decimal_price_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[1]/div/div[1]/div/div[1]/span[2]/span[1]"
+            "name_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[1]/div/div[1]/p",
+            "price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[1]/div/div[1]/div/div[1]/span[1]",
+            "decimal_price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[1]/div/div[1]/div/div[1]/span[2]/span[1]"
         },
         {
-            "name_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[3]/div/div[1]/p",
-            "price_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[3]/div/div[1]/div/div[1]/span[1]",
-            "decimal_price_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[3]/div/div[1]/div/div[1]/span[2]/span[1]"
+            "name_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[2]/div/div[1]/p",
+            "price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[2]/div/div[1]/div/div[1]/span[1]",
+            "decimal_price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[2]/div/div[1]/div/div[1]/span[2]/span[1]"
         },
         {
-            "name_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[4]/div/div[1]/p",
-            "price_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[4]/div/div[1]/div/div[1]/span[1]",
-            "decimal_price_xpath": "//*[@id='content-hp']/main/div[1]/div[9]/div[4]/div/div[1]/div/div[1]/span[2]/span[1]"
-        }
+            "name_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[3]/div/div[1]/p",
+            "price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[3]/div/div[1]/p",
+            "decimal_price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[3]/div/div[1]/div/div[1]/span[2]/span[1]"
+        },
+        {
+            "name_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[4]/div/div[1]/p",
+            "price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[4]/div/div[1]/div/div[1]/span[1]",
+            "decimal_price_xpath": "/html/body/div[1]/div/div[3]/main/div/div[3]/div[4]/div/div[1]/div/div[1]/span[2]/span[1]"
+        }        
     ]
 
     for plan in additional_plans:
@@ -120,7 +128,6 @@ def byou(search_value, file_path):
     driver.quit()
     
     return df_plans
-
 
 
 
