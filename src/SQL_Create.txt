@@ -1,0 +1,24 @@
+CREATE TABLE Operateurs (
+    OperateurID INT IDENTITY(1,1) PRIMARY KEY,
+    NomOperateur NVARCHAR(255) NOT NULL,
+    URLSansEngagement NVARCHAR(2048) NULL
+);
+
+CREATE TABLE Forfaits (
+    ForfaitID INT IDENTITY(1,1) PRIMARY KEY,
+    OperateurID INT,
+    LimiteDonnees INT NOT NULL,
+    UniteDonnees NVARCHAR(10) NOT NULL, -- 'Mo' ou 'Go'
+    Compatible5G BIT NOT NULL DEFAULT 0, -- SQL Server utilise BIT pour les valeurs booléennes
+    CONSTRAINT FK_Forfait_OperateurID FOREIGN KEY (OperateurID) REFERENCES Operateurs(OperateurID)
+);
+
+CREATE TABLE Tarifs (
+    TarifID INT IDENTITY(1,1) PRIMARY KEY,
+    OperateurID INT,
+    ForfaitID INT,
+    Prix MONEY NOT NULL, -- MONEY est un type de données commun pour la monnaie dans SQL Server
+    DateEnregistrement DATE NOT NULL,
+    CONSTRAINT FK_Tarifs_OperateurID FOREIGN KEY (OperateurID) REFERENCES Operateurs(OperateurID),
+    CONSTRAINT FK_Tarifs_ForfaitID FOREIGN KEY (ForfaitID) REFERENCES Forfaits(ForfaitID)
+);
