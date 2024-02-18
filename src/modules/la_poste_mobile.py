@@ -2,23 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import datetime
-import os
-from dotenv import load_dotenv
-import pymssql
+from modules.azure_sql_db import load_environment_variables, get_database_connection, fetch_operator_data, insert_into_forfaits, insert_into_tarifs
 
-def load_environment_variables():
-    load_dotenv()
-
-def get_database_connection():
-    server = os.getenv('DB_SERVER')
-    database = os.getenv('DB_NAME')
-    username = os.getenv('DB_USER')
-    password = os.getenv('DB_PASSWORD')
-    return pymssql.connect(server, username, password, database)
-
-def fetch_operator_data(cursor):
-    cursor.execute("SELECT * FROM Operateurs WHERE NomOperateur = 'La Poste Mobile'")
-    return cursor.fetchone()
 
 def parse_plans_data(url):
     response = requests.get(url)
@@ -63,27 +48,22 @@ def insert_plans_to_database(cursor, conn, operator_data, plan_details, date_enr
         compatible5g = 1 if is_5g else 0
         price_float = float(price[1:])
         
-        # Now insert into Forfaits
-        cursor.execute("INSERT INTO Forfaits (OperateurID, LimiteDonnees, UniteDonnees, Compatible5G) VALUES (%s, %s, %s, %s); SELECT SCOPE_IDENTITY();", (OperateurID, limite, unite, 0))
-        forfait_id = cursor.fetchone()[0]
-        conn.commit()
+        forfait_id = insert_into_forfaits(cursor, OperateurID, limite, unite, 0)
+        conn.commit()  # Commit the Forfaits insert
         
-        # Now insert into Tarifs
-        sql_query = "INSERT INTO Tarifs (OperateurID, ForfaitID, Prix, DateEnregistrement) VALUES (%s, %s, %s, %s)"
-        cursor.execute(sql_query, (OperateurID, int(forfait_id), f"€{price_float:.2f}", date_enregistrement))
-        conn.commit()  # Commit the transaction to save the insert         
+        insert_into_tarifs(cursor, OperateurID, int(forfait_id),  f"€{price_float:.2f}", date_enregistrement)
+        conn.commit() 
         
         if is_5g:
-            new_price_float = price_float + price_addon
-            #forfait_final.append((index, limite, unite, compatible5g, f"€{new_price_float:.2f}", date_enregistrement))
-            cursor.execute("INSERT INTO Forfaits (OperateurID, LimiteDonnees, UniteDonnees, Compatible5G) VALUES (%s, %s, %s, %s); SELECT SCOPE_IDENTITY();", (OperateurID, limite, unite, compatible5g))
-            forfait_id = cursor.fetchone()[0]
-            conn.commit()
             
-            # Now insert into Tarifs
-            sql_query = "INSERT INTO Tarifs (OperateurID, ForfaitID, Prix, DateEnregistrement) VALUES (%s, %s, %s, %s)"
-            cursor.execute(sql_query, (OperateurID, int(forfait_id), f"€{new_price_float:.2f}", date_enregistrement))
-            conn.commit()  # Commit the transaction to save the insert  
+            new_price_float = price_float + price_addon
+            
+            forfait_id = insert_into_forfaits(cursor, OperateurID, limite, unite, compatible5g)
+            conn.commit()  # Commit the Forfaits insert
+            
+            insert_into_tarifs(cursor, OperateurID, int(forfait_id), f"€{new_price_float:.2f}", date_enregistrement)
+            conn.commit()            
+            
 
 def main():
     load_environment_variables()
@@ -91,7 +71,7 @@ def main():
     cursor = conn.cursor()
 
     date_enregistrement = datetime.datetime.now().strftime('%Y-%m-%d')
-    operator_data = fetch_operator_data(cursor)
+    operator_data = fetch_operator_data(cursor, 'La Poste Mobile')
     soup = parse_plans_data(operator_data[2])
     plan_details = extract_plan_details(soup)
     insert_plans_to_database(cursor, conn, operator_data, plan_details, date_enregistrement)

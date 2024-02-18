@@ -3,4 +3,6 @@ requests
 BeautifulSoup4
 selenium
 lxml
-xlsxwriter
+python-dotenv
+pymssql
+python-dotenv
