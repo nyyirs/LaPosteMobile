@@ -7,7 +7,7 @@ CREATE TABLE Operateurs (
 CREATE TABLE Forfaits (
     ForfaitID INT IDENTITY(1,1) PRIMARY KEY,
     OperateurID INT,
-    LimiteDonnees INT NOT NULL,
+    LimiteDonnees NVARCHAR(50) NOT NULL,
     UniteDonnees NVARCHAR(10) NOT NULL, -- 'Mo' ou 'Go'
     Compatible5G BIT NOT NULL DEFAULT 0, -- SQL Server utilise BIT pour les valeurs booléennes
     CONSTRAINT FK_Forfait_OperateurID FOREIGN KEY (OperateurID) REFERENCES Operateurs(OperateurID)

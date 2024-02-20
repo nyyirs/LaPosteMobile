@@ -8,11 +8,13 @@ Created on Sun Feb 18 16:52:49 2024
 # Import the entire module
 import modules.la_poste_mobile as lpm
 import modules.sfr as sfr
+import modules.orange as orange
 
 def run():
 
-    lpm.main()
-    sfr.main()
+    lpm.lpm()
+    sfr.sfr()
+    orange.orange()
 
 if __name__ == "__main__":
     run()
