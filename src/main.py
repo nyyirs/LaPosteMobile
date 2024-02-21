@@ -10,6 +10,7 @@ import modules.la_poste_mobile as lpm
 import modules.sfr as sfr
 import modules.orange as orange
 import modules.byou as byou
+import modules.sosh as sosh
 
 def run():
 
@@ -17,6 +18,7 @@ def run():
     sfr.sfr()
     orange.orange()
     byou.byou()
+    sosh.soch()
 
 if __name__ == "__main__":
     run()
