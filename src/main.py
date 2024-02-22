@@ -13,12 +13,13 @@ import modules.orange as orange
 import modules.byou as byou
 import modules.sosh as sosh
 import modules.free as free
+import modules.red as red
 
 app = Flask(__name__)
 
 @app.route('/run-tasks', methods=['GET'])
 def run_tasks():
-    tasks = [lpm.lpm, sfr.sfr, orange.orange, byou.byou, sosh.sosh, free.free]
+    tasks = [lpm.lpm, sfr.sfr, orange.orange, byou.byou, sosh.sosh, free.free, red.red()]
     
     with ThreadPoolExecutor() as executor:
         results = executor.map(lambda task: task(), tasks)
