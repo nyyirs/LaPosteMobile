@@ -43,3 +43,21 @@ def insert_into_tarifs(cursor, OperateurID, ForfaitID, price, date_enregistremen
     sql_query = "INSERT INTO Tarifs (OperateurID, ForfaitID, Prix, DateEnregistrement) VALUES (%s, %s, %s, %s)"
     cursor.execute(sql_query, (OperateurID, ForfaitID, price, date_enregistrement))
 
+def fetch_all_operator_plan_details(cursor):
+    sql_query = """
+        SELECT 
+            o.OperateurID,
+            o.NomOperateur, 
+            f.LimiteDonnees, 
+            f.UniteDonnees, 
+            f.Compatible5G, 
+            t.Prix, 
+            t.DateEnregistrement
+        FROM Operateurs o
+        INNER JOIN Forfaits f ON o.OperateurID = f.OperateurID
+        INNER JOIN Tarifs t ON f.ForfaitID = t.ForfaitID
+        AND o.OperateurID = t.OperateurID
+        ORDER BY OperateurID;
+        """
+    cursor.execute(sql_query)
+    return cursor.fetchall()
