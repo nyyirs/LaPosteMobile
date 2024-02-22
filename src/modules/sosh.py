@@ -11,7 +11,7 @@ import re
 import datetime
 from modules.azure_sql_db import load_environment_variables, get_database_connection, fetch_operator_data, insert_into_forfaits, insert_into_tarifs
 
-def soch():
+def sosh():
     # Load environment variables
     load_environment_variables()
     
