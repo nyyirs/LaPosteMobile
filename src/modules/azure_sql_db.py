@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import pymssql
 import os
 import time
+import datetime
 
 def load_environment_variables():
     load_dotenv()
@@ -42,6 +43,22 @@ def insert_into_forfaits(cursor, OperateurID, limite, unite, compatible5g):
 def insert_into_tarifs(cursor, OperateurID, ForfaitID, price, date_enregistrement):
     sql_query = "INSERT INTO Tarifs (OperateurID, ForfaitID, Prix, DateEnregistrement) VALUES (%s, %s, %s, %s)"
     cursor.execute(sql_query, (OperateurID, ForfaitID, price, date_enregistrement))
+    
+def check_date_exists(cursor):
+    # Get today's date in the format 'YYYY-MM-DD'
+    today_date = datetime.datetime.now().strftime('%Y-%m-%d')
+    
+    # SQL query to check for records with today's date. This gets the count of such records.
+    sql_query = "SELECT COUNT(*) FROM Tarifs WHERE DateEnregistrement = %s"
+    
+    # Execute the query
+    cursor.execute(sql_query, (today_date,))
+    
+    # Fetch the count of records for today's date
+    count = cursor.fetchone()[0]
+    
+    # If count is greater than 0, then at least one record exists for today's date
+    return count > 0
 
 def fetch_all_operator_plan_details(cursor):
     sql_query = """
