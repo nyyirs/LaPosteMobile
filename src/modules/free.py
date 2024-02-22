@@ -78,4 +78,5 @@ def free():
     # Close connection
     conn.close()
 
+    return NomOperateur + ' completed'
 

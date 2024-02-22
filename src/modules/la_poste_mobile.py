@@ -81,3 +81,5 @@ def lpm():
     
     # Close connection
     conn.close()
+    
+    return NomOperateur + ' completed'

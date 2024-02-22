@@ -79,3 +79,5 @@ def sfr():
     
     # Close connection
     conn.close()
+    
+    return NomOperateur + ' completed'

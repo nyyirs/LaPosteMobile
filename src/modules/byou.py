@@ -97,3 +97,4 @@ def byou():
     # Close connection
     conn.close()
 
+    return NomOperateur + ' completed'

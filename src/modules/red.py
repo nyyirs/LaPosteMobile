@@ -97,6 +97,8 @@ def red():
     
     # Close connection
     conn.close()
+    
+    return NomOperateur + ' completed'
 
 
 

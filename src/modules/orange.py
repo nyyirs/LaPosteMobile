@@ -79,3 +79,5 @@ def orange():
     
     # Close connection
     conn.close()
+    
+    return NomOperateur + ' completed'
