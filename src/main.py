@@ -5,7 +5,7 @@ Created on Sun Feb 18 16:52:49 2024
 @author: Nyyir
 """
 
-from flask import Flask, jsonify, send_file
+from flask import Flask, jsonify, send_file, render_template
 from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 from decimal import Decimal
@@ -36,6 +36,11 @@ def create_and_save_excel(cursor):
     df.to_excel(excel_path, index=False)
 
     return excel_path
+
+@app.route('/')
+def index():
+    # This route serves your HTML file with the download button
+    return render_template('index.html')
 
 @app.route('/run-tasks', methods=['GET'])
 def run_tasks():

@@ -83,4 +83,4 @@ def sfr():
         
         return NomOperateur + ' completed'
     except:
-        return 'SFR failed'
+        return 'SFR Failed'
