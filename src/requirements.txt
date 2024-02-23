@@ -7,3 +7,4 @@ python-dotenv
 pymssql
 python-dotenv
 webdriver-manager
+openpyxl
