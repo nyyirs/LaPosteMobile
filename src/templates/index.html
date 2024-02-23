@@ -17,34 +17,39 @@ window.addEventListener('DOMContentLoaded', (event) => {
         downloadButton.disabled = true;
         downloadButton.innerText = 'In Progress...';
 
-        // Perform the AJAX request
+        // Assuming you might want to do some check or fetch before the actual download
         fetch(form.action, {
-            method: 'GET', // or 'POST' if your server expects a POST request
-            // Headers may need to be set depending on the request
+            method: 'GET', // Adjust accordingly if needed
             headers: {
                 'Accept': 'application/json',
             },
         })
         .then(response => {
             if (response.ok) {
-                console.log('Success');
-                // Handle successful response (status code 200-299)
-                downloadButton.innerText = 'Download Complete';
+                // Assuming the server might return some condition or data to proceed with the download
+                console.log('Pre-download check success. Proceeding with file download.');
+                // Directly navigate to the form's action URL to trigger the download
+                window.location.href = form.action;
+                downloadButton.innerText = 'Download Initiated...';
             } else {
-                console.error('Server error');
-                // Handle server errors (status code 400-599)
+                console.error('Pre-download check failed. Server error.');
                 downloadButton.innerText = 'Error';
             }
-            downloadButton.disabled = false;
         })
         .catch((error) => {
-            console.error('Network error:', error);
-            // Handle network errors
-            downloadButton.innerText = 'Download';
-            downloadButton.disabled = false;
+            console.error('Network error during pre-download check:', error);
+            downloadButton.innerText = 'Network Error';
+        })
+        .finally(() => {
+            // Optionally, reset button text after a delay
+            setTimeout(() => {
+                downloadButton.disabled = false;
+                downloadButton.innerText = 'Download';
+            }, 5000); // Adjust the delay as needed
         });
     });
 });
+
 </script>
 </head>
 <body>
