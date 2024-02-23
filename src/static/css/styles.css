@@ -1,0 +1,100 @@
+/* Include Google Fonts in your CSS file or HTML link tag */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Apply the font family to the body to make it global */
+body {
+    font-family: 'Poppins', sans-serif;
+    /* ... other styles ... */
+}
+
+/* Center the text in the summary */
+.summary {
+    text-align: center;
+    margin: auto;
+}
+
+/* Style for the main title */
+.summary h1 {
+    font-size: 2rem; /* 32px */
+    font-weight: 700; /* Bold */
+    color: #333; /* Dark grey color */
+    margin-bottom: 0.5rem; /* 8px */
+}
+
+/* Style for the feature text */
+.summary .feature {
+    font-family: 'Poppins', sans-serif;    
+    font-size: 1.5rem; /* 24px */
+    font-weight: 400; /* Normal */
+    color: #333; /* Dark grey color */
+    margin-bottom: 0.5rem; /* 8px */
+}
+
+/* Style for the highlighted word */
+.summary .feature .highlight {
+    font-size: 2rem; /* 24px */
+    font-weight: 600; /* Semi-bold */
+    color: #ffcb05; /* Yellow color */
+}
+
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.order-summary {
+    position: relative;
+    background-color: #fff;
+    width: 400px;
+    padding: 20px;
+    margin-top: 30px; /* Make space for the logo to sit above */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.logo {
+    position: absolute;
+    top: -25px; /* Adjust to overlap a little bit */
+    left: -40px; /* Adjust as needed */
+    animation: bounce 2s infinite;
+    z-index: 10;
+}
+
+.logo img {
+    display: block;
+    width: 80px; /* Adjust the size of the logo as needed */
+}
+
+
+.confirm-order {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.confirm-order:hover {
+    background-color: #333;
+}
+
+.confirm-order:disabled {
+    background-color: #ccc; /* Gray color */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}

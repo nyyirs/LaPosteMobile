@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Data Plan</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Poste Mobile</title>
+<!-- Update the CSS file path -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.querySelector('form');
+    const downloadButton = document.querySelector('.confirm-order');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        downloadButton.disabled = true;
+        downloadButton.innerText = 'In Progress...';
+
+        // Perform the AJAX request
+        fetch(form.action, {
+            method: 'GET', // or 'POST' if your server expects a POST request
+            // Headers may need to be set depending on the request
+            headers: {
+                'Accept': 'application/json',
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Success');
+                // Handle successful response (status code 200-299)
+                downloadButton.innerText = 'Download Complete';
+            } else {
+                console.error('Server error');
+                // Handle server errors (status code 400-599)
+                downloadButton.innerText = 'Error';
+            }
+            downloadButton.disabled = false;
+        })
+        .catch((error) => {
+            console.error('Network error:', error);
+            // Handle network errors
+            downloadButton.innerText = 'Download';
+            downloadButton.disabled = false;
+        });
+    });
+});
+</script>
 </head>
 <body>
-    <h1>Data Plan Download</h1>
-    <form action="/run-tasks" method="get">
-        <button type="submit">Download Excel File</button>
+<div class="order-summary">
+    <div class="logo">
+        <!-- Update the SVG logo file path -->
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo">
+    </div>
+    <div class="summary">
+        <h1>La Poste Mobile</h1>
+        <p class="feature">web <span class="highlight">scraping</span> tool</p>
+    </div>
+    <form action="/run-tasks" method="get">    
+        <button type="submit" class="confirm-order">Download</button>
     </form>
+</div>
 </body>
 </html>
