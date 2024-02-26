@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         e.preventDefault(); // Prevent the default form submission
 
         downloadButton.disabled = true;
-        downloadButton.innerText = 'In Progress...';
+        downloadButton.innerText = 'En cours...';
 
         // Assuming you might want to do some check or fetch before the actual download
         fetch(form.action, {
@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 console.log('Pre-download check success. Proceeding with file download.');
                 // Directly navigate to the form's action URL to trigger the download
                 window.location.href = form.action;
-                downloadButton.innerText = 'Download Initiated...';
+                downloadButton.innerText = 'Téléchargement lancé...';
             } else {
                 console.error('Pre-download check failed. Server error.');
                 downloadButton.innerText = 'Error';
