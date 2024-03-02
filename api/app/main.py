@@ -26,6 +26,9 @@ from modules.youprice import Youprice
 # Create an instance of the FastAPI class
 app = FastAPI()
 
+# Configure logging at the start of your application
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 # Define a root `/` endpoint
 @app.get("/")
 async def read_root():
@@ -35,13 +38,8 @@ async def read_root():
         Lebara(), Lyca(), Nrj(), Orange(), Prixtel(), Reglo(), Sfr(), Red(),
         Sosh(), Syma(), Youprice()
     ]    
-    # Use ThreadPoolExecutor to run scrapers in parallel
-    with ThreadPoolExecutor() as executor:
-        future_to_scraper = {executor.submit(scraper.run): scraper for scraper in scrapers}
-        for future in concurrent.futures.as_completed(future_to_scraper):
-            scraper = future_to_scraper[future]
-            try:
-                data = future.result()
-            except Exception as exc:
-                return {"message": "Error found during scraping"}
+    for scraper in scrapers:
+        logging.info("\n ---------------------------------------------------------")
+        scraper.run()
+        
     return {"message": "Scraping completed successfully"}
