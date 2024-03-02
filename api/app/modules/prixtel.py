@@ -71,7 +71,8 @@ class Prixtel(BaseScraper):
             for plan, price in zip(extracted_name[i], extracted_price[i]):
                 if price:  # Ignore empty prices       
                     self.plans.append({'name': plan, 'is_5g': list3_flattened[i], 'price': price})
-                    
+        logging.info(f"Processed {len(self.plans)} plans for Prixtel.")                 
+
     def insert_data(self):
         """Insert processed plan data into the database."""
         logging.info("Inserting data into the database for Prixtel.")
@@ -83,8 +84,3 @@ class Prixtel(BaseScraper):
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Prixtel completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Prixtel()
-    scraper.run()   

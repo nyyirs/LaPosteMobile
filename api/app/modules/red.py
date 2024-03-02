@@ -31,26 +31,19 @@ class Red(BaseScraper):
     def process_data(self):
         """Process scraped plan data."""
         logging.info("Processing scraped data for RED.")
-        self.plans = []
-     
+        self.plans = []     
         # Find the <amp-state> tag with the specific ID 'serviceOffer'
-        amp_state_tag = self.soup.find('amp-state', id='serviceOffer')
-        
+        amp_state_tag = self.soup.find('amp-state', id='serviceOffer')        
         # Extract the JSON string from the <script> tag within <amp-state> if present
-        json_str = amp_state_tag.script.string if amp_state_tag and amp_state_tag.script else '{}'
-        
+        json_str = amp_state_tag.script.string if amp_state_tag and amp_state_tag.script else '{}'        
         # Parse the JSON string into a Python dictionary
-        data = json.loads(json_str)
-        
-        datanat_codes_labels = [(entry["code"], entry["label"]) for entry in data["data"]["redOneOfferConfiguration"]["datanat"]]        
-        
+        data = json.loads(json_str)        
+        datanat_codes_labels = [(entry["code"], entry["label"]) for entry in data["data"]["redOneOfferConfiguration"]["datanat"]] 
         # Base URL without query parameters
         base_url = 'https://api.red-by-sfr.fr/service-offer-red/api/rest/v1/mobile'
-        
         # Networks to iterate over
         networks = ["defaultNetwork", "net5G"]  # Define the network types
         results = []
-        
         # Perform network requests
         for code, label in datanat_codes_labels:
             for network in networks:
@@ -64,8 +57,7 @@ class Red(BaseScraper):
                     # Append data excluding code and network type, with formatted price
                     results.append((label, price, with5G))
                 else:
-                    logging.error(f"Failed to retrieve data for {code} ({label}) on {network}. Status code: {response.status_code}")
-        
+                    logging.error(f"Failed to retrieve data for {code} ({label}) on {network}. Status code: {response.status_code}")        
         # Process the results for comparison and exclusion
         final_results = []
         for i in range(0, len(results), 2):
@@ -77,14 +69,12 @@ class Red(BaseScraper):
                 final_results.append((results[i][0], "{:.2f}".format(results[i][1]), results[i][2]))
                 if i+1 < len(results):
                     final_results.append((results[i+1][0], "{:.2f}".format(results[i+1][1]), results[i+1][2]))
-
         # Example of adding processed data to self.plans
         for name, price, is_5g in final_results:
             name = name
             price = price
             is_5g = is_5g
-            self.plans.append({'name': name, 'price': price, 'is_5g': is_5g})
-        
+            self.plans.append({'name': name, 'price': price, 'is_5g': is_5g})        
         logging.info(f"Processed {len(self.plans)} plans for RED.")
 
     def insert_data(self):
@@ -96,14 +86,7 @@ class Red(BaseScraper):
             # Simplified example; adjust based on actual data structure and database schema
             limite, unite = plan['name'][:-2], plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
-
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-
         logging.info("Data insertion for RED completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Red()
-    scraper.run()

@@ -28,12 +28,10 @@ class Reglo(BaseScraper):
     def process_data(self):
         """Process scraped plan data."""
         logging.info("Processing scraped data for Reglo Mobile.")
-        self.plans = []
-        
+        self.plans = []        
         new_data = []
         for item in self.data:
-            new_data.append(item['parametres']['titre'].split(' '))
-        
+            new_data.append(item['parametres']['titre'].split(' '))        
         for row in new_data:
             # Identify where the data volume is located based on the structure of each list
             if row[5] == 'Internet':
@@ -44,7 +42,8 @@ class Reglo(BaseScraper):
             technology_type = True if row[1] == '5G' else False
             price = row[2].replace(",", ".")
             self.plans.append({'name': data_volume, 'is_5g': technology_type, 'price': price})  
-        
+        logging.info(f"Processed {len(self.plans)} plans for Reglo Mobile.")
+
     def insert_data(self):
         """Insert processed plan data into the database."""
         logging.info("Inserting data into the database for Reglo Mobile.")
@@ -52,14 +51,7 @@ class Reglo(BaseScraper):
         for plan in self.plans:
             limite, unite = plan['name'][:-2], plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
-
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-
         logging.info("Data insertion for Reglo Mobile completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Reglo()
-    scraper.run()      

@@ -44,7 +44,8 @@ class Syma(BaseScraper):
         prices_formatted = [f"{match.group(1)}.{match.group(2)}" for match in prices_only if match]
         for name, is5g, price in zip(alt_names, network_technology, prices_formatted):
             self.plans.append({'name': name, 'is_5g': is5g, 'price': price})
-            
+        logging.info(f"Processed {len(self.plans)} plans for Syma.")
+
     def insert_data(self):
         """Insert processed plan data into the database."""
         logging.info("Inserting data into the database for Syma.")
@@ -52,14 +53,7 @@ class Syma(BaseScraper):
         for plan in self.plans:
             limite, unite = plan['name'][:-2], plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
-
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-
-        logging.info("Data insertion for Syma completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Syma()
-    scraper.run()              
+        logging.info("Data insertion for Syma completed.")           

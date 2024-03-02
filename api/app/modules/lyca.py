@@ -63,10 +63,11 @@ class Lyca(BaseScraper):
         alt_network = ["5G" in net.text for net in network]
         for name, is5g, price in zip(alt_names, alt_network, alt_prices):
             self.plans.append({'name': name.replace(" ", ""), 'is_5g': is5g, 'price': price})        
-        
+        logging.info(f"Processed {len(self.plans)} plans for Lyca Mobile.")
+
     def insert_data(self):
         """Insert processed plan data into the database."""
-        logging.info("Inserting data into the database for Reglo Mobile.")
+        logging.info("Inserting data into the database for Lyca Mobile.")
         date_enregistrement = datetime.datetime.now().strftime('%Y-%m-%d')
         for plan in self.plans:
             limite, unite = plan['name'][:-2], plan['name'][-2:]
@@ -74,9 +75,4 @@ class Lyca(BaseScraper):
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-        logging.info("Data insertion for Reglo Mobile completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Lyca()
-    scraper.run()         
+        logging.info("Data insertion for Lyca Mobile completed.") 

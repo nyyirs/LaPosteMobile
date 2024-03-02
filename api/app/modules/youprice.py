@@ -41,7 +41,8 @@ class Youprice(BaseScraper):
                 # Concatenating description with volumeMax
                 description_concat = f"{volume_max}{description_part}"                
                 self.plans.append({'name': description_concat, 'is_5g': is_5g_authorized, 'price': price})
-                
+        logging.info(f"Processed {len(self.plans)} plans for Youprice.")          
+
     def insert_data(self):
         """Insert processed plan data into the database."""
         logging.info("Inserting data into the database for Youprice.")
@@ -52,9 +53,4 @@ class Youprice(BaseScraper):
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-        logging.info("Data insertion for Youprice completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Youprice()
-    scraper.run()  
+        logging.info("Data insertion for Youprice completed.")  

@@ -31,15 +31,12 @@ class Creditmutuel(BaseScraper):
     def process_data(self):
         """Process scraped plan data."""
         logging.info("Processing scraped data for Crédit mutuel mobile.")
-        self.plans = []
-        
+        self.plans = []        
         names = self.soup.find_all(class_="card__data")
-        alt_names = [plan.text.strip() for plan in names if plan.text.strip()]
-        
+        alt_names = [plan.text.strip() for plan in names if plan.text.strip()]        
         is5g = self.soup.find_all(class_="card__speed")
         pattern_5g = re.compile(r"5G")
-        extracted_5g = [bool(pattern_5g.search(text.text)) for text in is5g]
-        
+        extracted_5g = [bool(pattern_5g.search(text.text)) for text in is5g]        
         price_big_elements = self.soup.find_all(class_="card__price__big")
         price_bis_elements = self.soup.find_all(class_="card__price__bis")
         # Assuming each 'card__price__big' is followed by a 'card__price__bis', we pair them
@@ -50,7 +47,8 @@ class Creditmutuel(BaseScraper):
             full_prices.append(big_text + bis_text)
         for name, is5g, price in zip(alt_names, extracted_5g, full_prices):
             self.plans.append({'name': name.replace(" ", ""), 'is_5g': is5g, 'price': price})
-            
+        logging.info(f"Processed {len(self.plans)} plans for Crédit mutuel mobile.")
+
     def insert_data(self):
         """Insert processed plan data into the database."""
         logging.info("Inserting data into the database for Crédit mutuel mobile.")
@@ -58,14 +56,7 @@ class Creditmutuel(BaseScraper):
         for plan in self.plans:
             limite, unite = plan['name'][:-2], plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
-
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-
-        logging.info("Data insertion for Crédit mutuel mobile completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Creditmutuel()
-    scraper.run()                
+        logging.info("Data insertion for Crédit mutuel mobile completed.")     

@@ -66,10 +66,11 @@ class Lebara(BaseScraper):
         new_data = extracted_text[':items']['root'][':items']['responsivegrid'][':items']['detailedviewplans_co']['offers']
         for item in new_data:
             self.plans.append({'name': item['planName'].split(" ")[2], 'is_5g': False, 'price': item['cost'].replace(',','.')})  
+        logging.info(f"Processed {len(self.plans)} plans.")
 
     def insert_data(self):
         """Insert processed plan data into the database."""
-        logging.info("Inserting data into the database for Reglo Mobile.")
+        logging.info("Inserting data into the database for Lebara.")
         date_enregistrement = datetime.datetime.now().strftime('%Y-%m-%d')
         for plan in self.plans:
             limite, unite = plan['name'][:-2], plan['name'][-2:]
@@ -77,9 +78,4 @@ class Lebara(BaseScraper):
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-        logging.info("Data insertion for Reglo Mobile completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Lebara()
-    scraper.run() 
+        logging.info("Data insertion for Lebara completed.")

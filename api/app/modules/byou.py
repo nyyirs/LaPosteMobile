@@ -34,31 +34,25 @@ class Byou(BaseScraper):
         logging.info("Processing scraped data for B&You.")
         script_tag = self.soup.find('script', id='__NEXT_DATA__')
         json_str = script_tag.string if script_tag else '{}'
-        data = json.loads(json_str)
-        
-        self.plans = self._extract_plans(data)
-        
-        logging.info(f"Processed {len(self.plans)} plans for Orange.")
+        data = json.loads(json_str)        
+        self.plans = self._extract_plans(data)        
+        logging.info(f"Processed {len(self.plans)} plans for B&You.")
 
     def _extract_plans(self, data):
-        """Extract plans from JSON data."""
-        
-        main_offers = data['props']['pageProps']['productsList']['offers']        
-        plans = []
-        
+        """Extract plans from JSON data."""        
+        main_offers = data['props']['pageProps']['productsList']['offers']      
+        plans = []        
         for offer in main_offers:
             data_envelope = offer['data_envelope']
             newprice = offer['newprice']
-            option5g_present = bool(offer.get('option5g'))
-        
+            option5g_present = bool(offer.get('option5g'))        
             if option5g_present:
                 adjusted_price = newprice + offer['option5g']['price']
                 plans.append((data_envelope, True, adjusted_price))
             else:
-                plans.append((data_envelope, True, newprice))
-            
+                plans.append((data_envelope, True, newprice))            
             if option5g_present:
-                plans.append((data_envelope, False, newprice))
+                plans.append((data_envelope, False, newprice))             
         return plans
 
     def insert_data(self):
@@ -69,8 +63,7 @@ class Byou(BaseScraper):
             # Assuming 'name' format needs parsing for 'limite' and 'unite'
             match = re.match(r'((?:\d+h)?\s*\d+)\s*(Go|Mo)', name)
             limite, unite = match.groups() if match else (None, None)
-            compatible5g = 1 if is_5g else 0
-            
+            compatible5g = 1 if is_5g else 0            
             if is_5g:
                 forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
                 self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, price, date_enregistrement)
@@ -78,11 +71,5 @@ class Byou(BaseScraper):
             else:
                 forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, 0)
                 self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, price, date_enregistrement)
-                logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")
-                
+                logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")                
         logging.info("Data insertion for B&You completed.")
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Byou()
-    scraper.run()
