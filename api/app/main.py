@@ -1,6 +1,7 @@
 # Import FastAPI
 from fastapi import FastAPI
 import logging
+from modules.logging_config import configure_logging
 from concurrent.futures import ThreadPoolExecutor
 import concurrent.futures
 
@@ -26,20 +27,25 @@ from modules.youprice import Youprice
 # Create an instance of the FastAPI class
 app = FastAPI()
 
-# Configure logging at the start of your application
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Configure logging and get the custom error counter handler
+error_counter_handler = configure_logging()
+
+# Your application code here
+logger = logging.getLogger(__name__)
 
 # Define a root `/` endpoint
 @app.get("/")
 async def read_root():
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     scrapers = [
         Auchan(), Byou(), Coriolis(), Creditmutuel(), Free(), Cdiscount(), Lapostemobile(),
         Lebara(), Lyca(), Nrj(), Orange(), Prixtel(), Reglo(), Sfr(), Red(),
         Sosh(), Syma(), Youprice()
     ]    
     for scraper in scrapers:
-        logging.info("\n ---------------------------------------------------------")
+        logging.info("------------------------Start-----------------------")
         scraper.run()
-        
-    return {"message": "Scraping completed successfully"}
+        logging.info("------------------------End-------------------------\n")
+    
+    logging.info(f"Total Errors Logged: {error_counter_handler.error_count} \n")
+
+    return {"message": "Scraping completed",}

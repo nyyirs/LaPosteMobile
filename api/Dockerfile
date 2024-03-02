@@ -2,7 +2,7 @@
 FROM python:3.12.2-slim-bullseye
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install Chrome
 RUN apt-get update && apt-get install -y wget gnupg2 curl unzip software-properties-common \
@@ -12,10 +12,12 @@ RUN apt-get update && apt-get install -y wget gnupg2 curl unzip software-propert
     && apt-get install -y google-chrome-stable
 
 # Copy the current directory contents into the container at /usr/src/app
-COPY . .
+COPY /app /app
+
+COPY ./requirements.txt /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Run app.py when the container launches
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
