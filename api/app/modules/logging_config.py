@@ -20,7 +20,7 @@ def configure_logging():
 
     # Generate log file name with the current date
     current_date = datetime.now().strftime("%Y_%m_%d")
-    log_file_name = f"scraper_{current_date}.log"
+    log_file_name = f"{current_date}.log"
 
     # Create a file handler for logging to a file
     file_handler = logging.FileHandler(log_file_name)

@@ -9,3 +9,4 @@ openpyxl
 fastapi 
 uvicorn
 webdriver-manager
+azure-storage-blob
