@@ -31,27 +31,23 @@ class Auchan(BaseScraper):
         
     def process_data(self):
         """Process scraped plan data."""
-        logging.info("Processing scraped data for Auchan Telecom.")
-        
-        self.plans = []  
-        
+        logging.info("Processing scraped data for Auchan Telecom.")        
+        self.plans = []          
         names = self.soup.find_all(class_="data")
         alt_names = [plan.text.strip() for plan in names if 'Internet' not in plan.text.strip()]
-        extracted_texts = list(OrderedDict.fromkeys(alt_names))
-        
+        extracted_texts = list(OrderedDict.fromkeys(alt_names))        
         alt_5g = [plan.text.strip() for plan in names if plan.text.strip()]
         filtered_5g = [name for name in alt_5g if len(name) > 10]
         pattern_5g = re.compile(r"5g")
-        extracted_5g = [bool(pattern_5g.search(text)) for text in filtered_5g if text.strip()]
-        
+        extracted_5g = [bool(pattern_5g.search(text)) for text in filtered_5g if text.strip()]        
         prices = self.soup.find_all(class_="price")
         prices = [item.text.strip() for item in prices if item]
         prices_no_duplicates = list(OrderedDict.fromkeys(prices))
-        prices = [price.replace("€", ".").replace("/mois", "") for price in prices_no_duplicates if '€' in price]
-        
+        prices = [price.replace("€", ".").replace("/mois", "") for price in prices_no_duplicates if '€' in price]        
         for name, is5g, price in zip(extracted_texts, extracted_5g, prices):
             self.plans.append({'name': name, 'is_5g': is5g, 'price': price})
-            
+        logging.info(f"Processed {len(self.plans)} plans.")
+
     def insert_data(self):
         """Insert processed plan data into the database."""
         logging.info("Inserting data into the database for Auchan Telecom.")
@@ -59,11 +55,9 @@ class Auchan(BaseScraper):
         for plan in self.plans:
             limite, unite = plan['name'][:-2], plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
-
             forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
             self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
-
         logging.info("Data insertion for Auchan Telecom completed.")
 
 if __name__ == "__main__":
