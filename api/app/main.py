@@ -36,8 +36,11 @@ async def run():
     # Configure logging and get the custom error counter handler
     # This ensures logging starts here
     error_counter_handler, file_handler = configure_logging()
-
-    scrapers = [Auchan()]
+    scrapers = [
+        Auchan(), Byou(), Coriolis(), Creditmutuel(), Free(), Cdiscount(), Lapostemobile(),
+        Lebara(), Lyca(), Nrj(), Orange(), Prixtel(), Reglo(), Sfr(), Red(),
+        Sosh(), Syma(), Youprice()
+    ] 
     for scraper in scrapers:
         logging.info("------------------------Start-----------------------")
         scraper.run()
