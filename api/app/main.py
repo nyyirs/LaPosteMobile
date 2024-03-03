@@ -2,8 +2,6 @@
 from fastapi import FastAPI
 import logging
 from modules.logging_config import configure_logging
-from concurrent.futures import ThreadPoolExecutor
-import concurrent.futures
 
 from modules.auchantelecom import Auchan
 from modules.byou import Byou
@@ -48,4 +46,4 @@ async def read_root():
     
     logging.info(f"Total Errors Logged: {error_counter_handler.error_count} \n")
 
-    return {"message": "Scraping completed",}
+    return {"message": "Scraping completed", "errors": error_counter_handler.error_count}
