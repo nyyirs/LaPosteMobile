@@ -32,10 +32,10 @@ class Syma(BaseScraper):
         """Process scraped plan data."""
         logging.info("Processing scraped data for Syma.")
         self.plans = []
-        names = self.soup.find_all("span", class_="red")
+        names = self.soup.find_all("span", class_="value_for_renewable")
         # Use a list comprehension with a condition to preserve order and remove duplicates
         alt_names = []
-        [alt_names.append(plan.text.strip().replace(' ', '')) for plan in names if plan.text.strip() and plan.text.strip().replace(' ', '') not in alt_names]        
+        [alt_names.append(plan.text.strip().replace(' ', '')) for plan in names]     
         prices = self.soup.find_all("div", class_="forfaits_top_list_item")
         alt_prices = [price.text.strip().replace('\n',' ') for price in prices if price.text.strip()]        
         network_technology = [True if '5G' in text else False if '4G' in text else None for text in alt_prices][:4]        
