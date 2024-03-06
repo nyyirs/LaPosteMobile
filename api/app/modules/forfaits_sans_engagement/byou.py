@@ -10,8 +10,16 @@ from bs4 import BeautifulSoup
 import json
 import logging
 import datetime
-from modules.base_scraper import BaseScraper
 import re
+import sys
+import os
+
+# Add the parent directory to sys.path
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
+
+from base_scraper import BaseScraper
+
 
 class Byou(BaseScraper):
     def __init__(self):
@@ -65,11 +73,16 @@ class Byou(BaseScraper):
             limite, unite = match.groups() if match else (None, None)
             compatible5g = 1 if is_5g else 0            
             if is_5g:
-                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
-                self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, price, date_enregistrement)
+                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 'NULL')
+                self.db_operations.insert_into_tarifs(forfait_id, price, date_enregistrement)
                 logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")
             else:
-                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, 0)
-                self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, price, date_enregistrement)
+                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, 0, 0, 'NULL')
+                self.db_operations.insert_into_tarifs(forfait_id, price, date_enregistrement)
                 logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")                
         logging.info("Data insertion for B&You completed.")
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    scraper = Byou()
+    scraper.run()        

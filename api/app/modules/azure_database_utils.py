@@ -58,23 +58,23 @@ class OperatorDatabaseOperations:
         query = "SELECT * FROM Operateurs WHERE NomOperateur = %s"
         return self.db_util.execute_query(query, (operator_name,), fetchone=True)
 
-    def insert_into_forfaits(self, OperateurID, limite, unite, compatible5g):
+    def insert_into_forfaits(self, OperateurID, limite, unite, compatible5g, avecEngagement, annee):
         query = """
-        INSERT INTO ForfaitsSansEngagement (OperateurID, LimiteDonnees, UniteDonnees, Compatible5G)
-        VALUES (%s, %s, %s, %s); SELECT SCOPE_IDENTITY();
+        INSERT INTO Forfaits (OperateurID, LimiteDonnees, UniteDonnees, Compatible5G, AvecEngagement, Annee)
+        VALUES (%s, %s, %s, %s, %s, %s); SELECT SCOPE_IDENTITY();
         """
-        return self.db_util.insert_and_return_id(query, (OperateurID, limite, unite, compatible5g))
+        return self.db_util.insert_and_return_id(query, (OperateurID, limite, unite, compatible5g, avecEngagement, annee))
 
-    def insert_into_tarifs(self, OperateurID, ForfaitID, price, date_enregistrement):
+    def insert_into_tarifs(self, ForfaitID, price, date_enregistrement):
         query = """
-        INSERT INTO TarifsSansEngagement (OperateurID, ForfaitID, Prix, DateEnregistrement)
-        VALUES (%s, %s, %s, %s)
+        INSERT INTO Tarifs (ForfaitID, Prix, DateEnregistrement)
+        VALUES (%s, %s, %s)
         """
-        self.db_util.execute_non_query(query, (OperateurID, ForfaitID, price, date_enregistrement))
+        self.db_util.execute_non_query(query, (ForfaitID, price, date_enregistrement))
 
     def check_date_exists(self):
         today_date = datetime.datetime.now().strftime('%Y-%m-%d')
-        query = "SELECT COUNT(*) FROM TarifsSansEngagement WHERE DateEnregistrement = %s"
+        query = "SELECT COUNT(*) FROM Tarifs WHERE DateEnregistrement = %s"
         result = self.db_util.execute_query(query, (today_date,), fetchone=True)
         return result[''] > 0
 

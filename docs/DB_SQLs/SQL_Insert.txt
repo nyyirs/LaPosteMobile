@@ -1,8 +1,8 @@
 INSERT INTO Operateurs (NomOperateur, URLSansEngagement) VALUES
-('La Poste Mobile', 'https://www.lapostemobile.fr/offres-mobiles/forfaits-sans-engagement'),
-('SFR', 'https://www.sfr.fr/offre-mobile'),
-('Orange', 'https://boutique.orange.fr/mobile/offres?withOpenPrices=false'),
-('B&You', 'https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement'),
+('La Poste Mobile', 'https://www.lapostemobile.fr/offres-mobiles/forfaits-sans-engagement', 'https://www.lapostemobile.fr/offres-mobiles/forfaits-avec-telephone'),
+('SFR', 'https://www.sfr.fr/offre-mobile', 'https://www.sfr.fr/offre-mobile'),
+('Orange', 'https://boutique.orange.fr/mobile/offres?withOpenPrices=false', 'https://boutique.orange.fr/mobile/offres?_ga=2.146702900.1206541786.1707377648-761195977.1706858949&withOpenPrices=false'),
+('B&You', 'https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement', 'https://www.bouyguestelecom.fr/forfaits-mobiles/avec-engagement'),
 ('Sosh', 'https://shop.sosh.fr/mobile/forfaits-mobiles?MCO=OFR&doNotTryToAuthenticateAgain=true'),
 ('RED', 'https://www.red-by-sfr.fr/forfaits-mobiles/'),
 ('Free', 'https://mobile.free.fr/'),

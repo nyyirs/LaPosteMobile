@@ -1,5 +1,5 @@
 import logging
-from modules.azure_database_utils import OperatorDatabaseOperations
+from azure_database_utils import OperatorDatabaseOperations
 
 class BaseScraper:
     def __init__(self, operator_name):
