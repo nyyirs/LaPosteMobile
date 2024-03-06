@@ -10,7 +10,14 @@ from bs4 import BeautifulSoup
 import re
 import datetime
 import logging
-from modules.base_scraper import BaseScraper
+import sys
+import os
+
+# Add the parent directory to sys.path
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
+
+from base_scraper import BaseScraper
 
 class Lapostemobile(BaseScraper):
     def __init__(self):
@@ -67,12 +74,17 @@ class Lapostemobile(BaseScraper):
             limite, unite = plan['name'][:-2], plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
             price_float = float(plan['price'][1:])
-            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, 0)
-            self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, f"{price_float:.2f}", date_enregistrement)
+            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, 0, 0, 'NULL')
+            self.db_operations.insert_into_tarifs(forfait_id, f"{price_float:.2f}", date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {price_float:.2f} with is5G {plan['is_5g']}")
             if plan['is_5g']:
                 new_price_float = price_float + plan['price_addon']
-                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
-                self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, f"{new_price_float:.2f}", date_enregistrement)
+                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 'NULL')
+                self.db_operations.insert_into_tarifs(forfait_id, f"{new_price_float:.2f}", date_enregistrement)
                 logging.info(f"Inserted plan {plan['name']} with price {new_price_float:.2f} with is5G {plan['is_5g']}")
         logging.info("Data insertion for La Poste Mobile completed.")
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    scraper = Lapostemobile()
+    scraper.run()             

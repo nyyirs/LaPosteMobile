@@ -10,7 +10,14 @@ from bs4 import BeautifulSoup
 import re
 import datetime
 import logging
-from modules.base_scraper import BaseScraper
+import sys
+import os
+
+# Add the parent directory to sys.path
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
+
+from base_scraper import BaseScraper
 
 class Sfr(BaseScraper):
     def __init__(self):
@@ -64,7 +71,12 @@ class Sfr(BaseScraper):
             limite, unite = re.match(r'([\d\sH]+)\s*(Go|Mo)', plan['name'].replace(' ', '')).groups()
             compatible5g = 1 if plan['is_5g'] else 0
             price = plan['price']
-            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g)
-            self.db_operations.insert_into_tarifs(self.operator_data['OperateurID'], forfait_id, price, date_enregistrement)
+            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 'NULL')
+            self.db_operations.insert_into_tarifs(forfait_id, price, date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {price} with is5G {plan['is_5g']}.")
         logging.info("Data insertion for SFR completed.")
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    scraper = Sfr()
+    scraper.run()              

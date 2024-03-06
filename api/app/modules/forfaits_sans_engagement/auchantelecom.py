@@ -70,4 +70,4 @@ class Auchan(BaseScraper):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     scraper = Auchan()
-    scraper.run()            
+    scraper.run()
