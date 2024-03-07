@@ -20,7 +20,7 @@ from base_scraper import BaseScraper
 class Youprice(BaseScraper):
     def __init__(self):
         super().__init__("Youprice")
-        logging.info("Initialized Youprice Scraper.")
+        logging.info("Initialized Youprice Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from Youprice's website."""
@@ -62,7 +62,7 @@ class Youprice(BaseScraper):
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Youprice completed.")  
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Youprice()
-    scraper.run()
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Youprice()
+#     scraper.run()

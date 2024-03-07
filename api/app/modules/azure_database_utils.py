@@ -22,7 +22,6 @@ class DatabaseUtility:
         for attempt in range(max_retries):
             try:
                 self.conn = pymssql.connect(self.server, self.username, self.password, self.database)
-                logging.info("Database connection established.")
                 return
             except pymssql.OperationalError as e:
                 logging.warning(f"Attempt {attempt + 1} failed: {e}")

@@ -25,7 +25,7 @@ from base_scraper import BaseScraper
 class Lebara(BaseScraper):
     def __init__(self):
         super().__init__("Lebara")
-        logging.info("Initialized Lebara Scraper.")
+        logging.info("Initialized Lebara Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from Lebara's website."""
@@ -87,7 +87,7 @@ class Lebara(BaseScraper):
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Lebara completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Lebara()
-    scraper.run()           
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Lebara()
+#     scraper.run()           

@@ -22,7 +22,7 @@ from base_scraper import BaseScraper
 class Sosh(BaseScraper):
     def __init__(self):
         super().__init__("Sosh")
-        logging.info("Initialized Sosh Scraper.")
+        logging.info("Initialized Sosh Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from Sosh's website."""
@@ -62,7 +62,7 @@ class Sosh(BaseScraper):
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Sosh completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Sosh()
-    scraper.run()              
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Sosh()
+#     scraper.run()              

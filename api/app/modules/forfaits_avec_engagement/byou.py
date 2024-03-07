@@ -24,10 +24,10 @@ sys.path.append(parent_dir)
 
 from base_scraper import BaseScraper   
 
-class byou(BaseScraper):
+class Byou(BaseScraper):
     def __init__(self):
         super().__init__("B&You")
-        logging.info("Initialized B&You mobile Scraper.")
+        logging.info("Initialized B&You mobile Scraper Avec Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from B&You mobile's website."""
@@ -122,7 +122,7 @@ class byou(BaseScraper):
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']} with engagement 1 with annee {plan['annee']}")
         logging.info("Data insertion for B&You mobile completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = byou()
-    scraper.run()     
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Byou()
+#     scraper.run()     

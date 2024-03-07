@@ -22,7 +22,7 @@ from base_scraper import BaseScraper
 class Orange(BaseScraper):
     def __init__(self):
         super().__init__("Orange")
-        logging.info("Initialized Orange Scraper.")
+        logging.info("Initialized Orange Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from Orange's website."""
@@ -81,7 +81,7 @@ class Orange(BaseScraper):
                 logging.info(f"Inserted plan {plan['name']} with price {price} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Orange completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Orange()
-    scraper.run()         
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Orange()
+#     scraper.run()         

@@ -24,7 +24,7 @@ from base_scraper import BaseScraper
 class Byou(BaseScraper):
     def __init__(self):
         super().__init__("B&You")
-        logging.info("Initialized B&You Scraper.")
+        logging.info("Initialized B&You Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from B&You's website."""
@@ -82,7 +82,7 @@ class Byou(BaseScraper):
                 logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")                
         logging.info("Data insertion for B&You completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Byou()
-    scraper.run()        
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Byou()
+#     scraper.run()        

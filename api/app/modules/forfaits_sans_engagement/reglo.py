@@ -19,7 +19,7 @@ from base_scraper import BaseScraper
 class Reglo(BaseScraper):
     def __init__(self):
         super().__init__("Reglo Mobile")
-        logging.info("Initialized Reglo Mobile Scraper.")
+        logging.info("Initialized Reglo Mobile Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from Reglo Mobile's website."""
@@ -63,7 +63,7 @@ class Reglo(BaseScraper):
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Reglo Mobile completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Reglo()
-    scraper.run()            
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Reglo()
+#     scraper.run()            

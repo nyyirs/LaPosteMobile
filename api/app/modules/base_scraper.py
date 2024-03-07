@@ -9,7 +9,6 @@ class BaseScraper:
 
     def setup(self):
         """Prepare scraper by fetching operator details."""
-        logging.info(f"Setting up scraper for {self.operator_name}")
         self.operator_data = self.db_operations.fetch_operator_data(self.operator_name)
         if not self.operator_data:
             logging.error(f"No data found for operator: {self.operator_name}")

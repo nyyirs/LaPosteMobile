@@ -28,7 +28,7 @@ from base_scraper import BaseScraper
 class Cdiscount(BaseScraper):
     def __init__(self):
         super().__init__("Cdiscount mobile")
-        logging.info("Initialized Cdiscount mobile Scraper.")
+        logging.info("Initialized Cdiscount mobile Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from Cdiscount mobile's website."""
@@ -118,7 +118,7 @@ class Cdiscount(BaseScraper):
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Cdiscount mobile completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Cdiscount()
-    scraper.run()           
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Cdiscount()
+#     scraper.run()           

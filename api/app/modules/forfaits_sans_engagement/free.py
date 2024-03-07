@@ -23,7 +23,7 @@ from base_scraper import BaseScraper
 class Free(BaseScraper):
     def __init__(self):
         super().__init__("Free")
-        logging.info("Initialized Free Scraper.")
+        logging.info("Initialized Free Scraper Sans Engagement.")
 
     def scrape_data(self):
         """Scrape plan data from Free's website."""
@@ -68,7 +68,7 @@ class Free(BaseScraper):
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for Free completed.")
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = Free()
-    scraper.run()                          
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+#     scraper = Free()
+#     scraper.run()                          
