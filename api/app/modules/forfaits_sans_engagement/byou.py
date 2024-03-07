@@ -73,11 +73,11 @@ class Byou(BaseScraper):
             limite, unite = match.groups() if match else (None, None)
             compatible5g = 1 if is_5g else 0            
             if is_5g:
-                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 'NULL')
+                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 0, 0, 'NULL')
                 self.db_operations.insert_into_tarifs(forfait_id, price, date_enregistrement)
                 logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")
             else:
-                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, 0, 0, 'NULL')
+                forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, 0, 0, 0, 0, 'NULL')
                 self.db_operations.insert_into_tarifs(forfait_id, price, date_enregistrement)
                 logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")                
         logging.info("Data insertion for B&You completed.")

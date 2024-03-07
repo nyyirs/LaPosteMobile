@@ -117,9 +117,9 @@ class byou(BaseScraper):
         for plan in self.plans:
             limite, unite = plan['name'][:-2].replace(' ',''), plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
-            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 1, plan['annee'])
+            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 0, 1, plan['annee'])
             self.db_operations.insert_into_tarifs(forfait_id, plan['price'], date_enregistrement)
-            logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']} with engagement 1 with year {plan['annee']}")
+            logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']} with engagement 1 with annee {plan['annee']}")
         logging.info("Data insertion for B&You mobile completed.")
 
 if __name__ == "__main__":

@@ -71,7 +71,7 @@ class Sfr(BaseScraper):
             limite, unite = re.match(r'([\d\sH]+)\s*(Go|Mo)', plan['name'].replace(' ', '')).groups()
             compatible5g = 1 if plan['is_5g'] else 0
             price = plan['price']
-            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 'NULL')
+            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 0, 0, 'NULL')
             self.db_operations.insert_into_tarifs(forfait_id, price, date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {price} with is5G {plan['is_5g']}.")
         logging.info("Data insertion for SFR completed.")

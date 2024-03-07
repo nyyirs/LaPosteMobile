@@ -2,7 +2,8 @@ CREATE TABLE Operateurs (
     OperateurID INT IDENTITY(1,1) PRIMARY KEY,
     NomOperateur NVARCHAR(255) NOT NULL,
     URLSansEngagement NVARCHAR(2048) NULL,
-    URLAvecEngagement NVARCHAR(2048) NULL
+    URLAvecEngagement NVARCHAR(2048) NULL,
+    URLFixe NVARCHAR(2048) NULL;
 );
 
 CREATE TABLE Forfaits (
@@ -11,8 +12,10 @@ CREATE TABLE Forfaits (
     LimiteDonnees NVARCHAR(50) NOT NULL,
     UniteDonnees NVARCHAR(10) NOT NULL, -- Consider normalization
     Compatible5G BIT NOT NULL DEFAULT 0,
+    Adsl BIT NOT NULL DEFAULT 0,
+    Fibre BIT NOT NULL DEFAULT 0,
     AvecEngagement BIT NOT NULL DEFAULT 0, -- New column to indicate engagement status
-    Year NVARCHAR(5) NULL, -- Nullable to accommodate non-engagement packages
+    Annee NVARCHAR(5) NULL, -- Nullable to accommodate non-engagement packages
     CONSTRAINT FK_Forfait_OperateurID FOREIGN KEY (OperateurID) REFERENCES Operateurs(OperateurID)
 );
 
@@ -23,3 +26,9 @@ CREATE TABLE Tarifs (
     DateEnregistrement DATE NOT NULL,
     CONSTRAINT FK_Tarifs_ForfaitID FOREIGN KEY (ForfaitID) REFERENCES Forfaits(ForfaitID)
 );
+
+
+## DeleteSQL ##
+
+DELETE FROM [dbo].[Tarifs]
+DBCC CHECKIDENT ('[dbo].[Tarifs]', RESEED, 0);      

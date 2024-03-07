@@ -93,7 +93,7 @@ class Red(BaseScraper):
             # Simplified example; adjust based on actual data structure and database schema
             limite, unite = plan['name'][:-2], plan['name'][-2:]
             compatible5g = 1 if plan['is_5g'] else 0
-            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 'NULL')
+            forfait_id = self.db_operations.insert_into_forfaits(self.operator_data['OperateurID'], limite, unite, compatible5g, 0, 0, 0, 'NULL')
             self.db_operations.insert_into_tarifs(forfait_id, plan['price'], date_enregistrement)
             logging.info(f"Inserted plan {plan['name']} with price {plan['price']} with is5G {plan['is_5g']}")
         logging.info("Data insertion for RED completed.")
