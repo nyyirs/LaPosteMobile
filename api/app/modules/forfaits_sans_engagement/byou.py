@@ -82,7 +82,7 @@ class Byou(BaseScraper):
                 logging.info(f"Inserted plan {name} with price {price} with is5G {is_5g}")                
         logging.info("Data insertion for B&You completed.")
 
-# if __name__ == "__main__":
-#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-#     scraper = Byou()
-#     scraper.run()        
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    scraper = Byou()
+    scraper.run()        

@@ -1,40 +1,20 @@
-INSERT INTO Operateurs (NomOperateur, URLSansEngagement) VALUES
-('La Poste Mobile', 'https://www.lapostemobile.fr/offres-mobiles/forfaits-sans-engagement', 'https://www.lapostemobile.fr/offres-mobiles/forfaits-avec-telephone'),
-('SFR', 'https://www.sfr.fr/offre-mobile', 'https://www.sfr.fr/offre-mobile'),
-('Orange', 'https://boutique.orange.fr/mobile/offres?withOpenPrices=false', 'https://boutique.orange.fr/mobile/offres?_ga=2.146702900.1206541786.1707377648-761195977.1706858949&withOpenPrices=false'),
-('B&You', 'https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement', 'https://www.bouyguestelecom.fr/forfaits-mobiles/avec-engagement'),
-('Sosh', 'https://shop.sosh.fr/mobile/forfaits-mobiles?MCO=OFR&doNotTryToAuthenticateAgain=true', NULL),
-('RED', 'https://www.red-by-sfr.fr/forfaits-mobiles/', NULL),
-('Free', 'https://mobile.free.fr/', NULL),
-('NRJ Mobile', 'https://www.nrjmobile.fr/fr/forfait-mobile.html', NULL),
-('Auchan Telecom', 'https://www.auchantelecom.fr/fr/', NULL),
-('Cdiscount mobile', 'https://www.cdiscount.com/cdiscount-mobile/forfaits-mobile-sans-engagement/v-16401-16401.html', NULL),
-('Prixtel', 'https://www.prixtel.com/', NULL),
-('Crédit mutuel mobile', 'https://www.creditmutuel.fr/fr/particuliers/mobile/forfaits-mobile-box.html', NULL),
-('Coriolis télécom', 'https://www.coriolis.com/forfaits-sans-mobile', NULL),
-('Reglo Mobile', 'https://www.reglomobile.fr/api/referentiel/Offers', NULL),
-('Lebara', 'https://www.lebara.fr/fr/prepaye.model.json', NULL),
-('Lyca Mobile', 'https://www.lycamobile.fr/fr/bundles/forfait-prepaye/#forfaits-+-sim', NULL),
-('Youprice', 'https://api.youprice.fr/Vitrine/Product/GetActivatedProducts?operateur=sfr', NULL),
-('Syma', 'https://www.symamobile.com/forfait?fid=294&req=compare', NULL);
+INSERT INTO Operateurs (NomOperateur, URLSansEngagement, URLAvecEngagement, URLFixe) VALUES
+('La Poste Mobile', 'https://www.lapostemobile.fr/offres-mobiles/forfaits-sans-engagement', 'https://www.lapostemobile.fr/offres-mobiles/forfaits-avec-telephone', NULL),
+('SFR', 'https://www.sfr.fr/offre-mobile', 'https://www.sfr.fr/offre-mobile', 'https://api.sfr.fr/service-offer/api/rest/v4/fixe?universe=GP&act=OPEN&brand=SFR&pnm=false&pnf=false'),
+('Orange', 'https://boutique.orange.fr/mobile/offres?withOpenPrices=false', 'https://boutique.orange.fr/mobile/offres?_ga=2.146702900.1206541786.1707377648-761195977.1706858949&withOpenPrices=false', 'https://boutique.orange.fr/internet/offres-fibre;https://boutique.orange.fr/internet/offres-adsl'),
+('B&You', 'https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement', 'https://www.bouyguestelecom.fr/forfaits-mobiles/avec-engagement', 'https://api.bouyguestelecom.fr/www/fai/roc'),
+('Sosh', 'https://shop.sosh.fr/mobile/forfaits-mobiles?MCO=OFR&doNotTryToAuthenticateAgain=true', NULL, 'https://shop.sosh.fr/box-internet'),
+('RED', 'https://www.red-by-sfr.fr/forfaits-mobiles/', NULL, 'https://www.red-by-sfr.fr/offre-internet/;https://www.red-by-sfr.fr/offre-internet/adsl.html'),
+('Free', 'https://mobile.free.fr/', NULL, 'https://www.free.fr/freebox/nos-offres-freebox/'),
+('NRJ Mobile', 'https://www.nrjmobile.fr/fr/forfait-mobile.html', NULL, NULL),
+('Auchan Telecom', 'https://www.auchantelecom.fr/fr/', NULL, NULL),
+('Cdiscount mobile', 'https://www.cdiscount.com/cdiscount-mobile/forfaits-mobile-sans-engagement/v-16401-16401.html', NULL, NULL),
+('Prixtel', 'https://www.prixtel.com/', NULL, NULL),
+('Crédit mutuel mobile', 'https://www.creditmutuel.fr/fr/particuliers/mobile/forfaits-mobile-box.html', NULL, NULL),
+('Coriolis télécom', 'https://www.coriolis.com/forfaits-sans-mobile', NULL, NULL),
+('Reglo Mobile', 'https://www.reglomobile.fr/api/referentiel/Offers', NULL, NULL),
+('Lebara', 'https://www.lebara.fr/fr/prepaye.model.json', NULL, NULL),
+('Lyca Mobile', 'https://www.lycamobile.fr/fr/bundles/forfait-prepaye/#forfaits-+-sim', NULL, NULL),
+('Youprice', 'https://api.youprice.fr/Vitrine/Product/GetActivatedProducts?operateur=sfr', NULL, NULL),
+('Syma', 'https://www.symamobile.com/forfait?fid=294&req=compare', NULL, NULL);
 
-##URLS
-
-1	La Poste Mobile	https://www.lapostemobile.fr/offres-mobiles/forfaits-sans-engagement	https://www.lapostemobile.fr/offres-mobiles/forfaits-avec-telephone	NULL
-2	SFR	https://www.sfr.fr/offre-mobile	https://www.sfr.fr/offre-mobile	https://api.sfr.fr/service-offer/api/rest/v4/fixe?universe=GP&act=OPEN&brand=SFR&pnm=false&pnf=false
-3	Orange	https://boutique.orange.fr/mobile/offres?withOpenPrices=false	https://boutique.orange.fr/mobile/offres?_ga=2.146702900.1206541786.1707377648-761195977.1706858949&withOpenPrices=false	https://boutique.orange.fr/internet/offres-fibre;https://boutique.orange.fr/internet/offres-adsl
-4	B&You	https://www.bouyguestelecom.fr/forfaits-mobiles/sans-engagement	https://www.bouyguestelecom.fr/forfaits-mobiles/avec-engagement	https://api.bouyguestelecom.fr/www/fai/roc
-5	Sosh	https://shop.sosh.fr/mobile/forfaits-mobiles?MCO=OFR&doNotTryToAuthenticateAgain=true	NULL	https://shop.sosh.fr/box-internet
-6	RED	https://www.red-by-sfr.fr/forfaits-mobiles/	NULL	https://www.red-by-sfr.fr/offre-internet/;https://www.red-by-sfr.fr/offre-internet/adsl.html
-7	Free	https://mobile.free.fr/	NULL	https://www.free.fr/freebox/nos-offres-freebox/
-8	NRJ Mobile	https://www.nrjmobile.fr/fr/forfait-mobile.html	NULL	NULL
-9	Auchan Telecom	https://www.auchantelecom.fr/fr/	NULL	NULL
-10	Cdiscount mobile	https://www.cdiscount.com/cdiscount-mobile/forfaits-mobile-sans-engagement/v-16401-16401.html	NULL	NULL
-11	Prixtel	https://www.prixtel.com/	NULL	NULL
-12	Crédit mutuel mobile	https://www.creditmutuel.fr/fr/particuliers/mobile/forfaits-mobile-box.html	NULL	NULL
-13	Coriolis télécom	https://www.coriolis.com/forfaits-sans-mobile	NULL	NULL
-14	Reglo Mobile	https://www.reglomobile.fr/api/referentiel/Offers	NULL	NULL
-15	Lebara	https://www.lebara.fr/fr/prepaye.model.json	NULL	NULL
-16	Lyca Mobile	https://www.lycamobile.fr/fr/bundles/forfait-prepaye/#forfaits-+-sim	NULL	NULL
-17	Youprice	https://api.youprice.fr/Vitrine/Product/GetActivatedProducts?operateur=sfr	NULL	NULL
-18	Syma	https://www.symamobile.com/forfait?fid=294&req=compare	NULL	NULL

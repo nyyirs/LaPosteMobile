@@ -57,12 +57,12 @@ class OperatorDatabaseOperations:
         query = "SELECT * FROM Operateurs WHERE NomOperateur = %s"
         return self.db_util.execute_query(query, (operator_name,), fetchone=True)
 
-    def insert_into_forfaits(self, OperateurID, limite, unite, compatible5g, adsl, fibre, avecEngagement, annee):
+    def insert_into_forfaits(self, OperateurID, limite, unite, compatible5g=0, adsl=0, fibre=0, avecEngagement=0, annee=0, dejaClient=0):
         query = """
-        INSERT INTO Forfaits (OperateurID, LimiteDonnees, UniteDonnees, Compatible5G, Adsl, Fibre, AvecEngagement, Annee)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s); SELECT SCOPE_IDENTITY();
+        INSERT INTO Forfaits (OperateurID, Donnees, UniteDonnees, Compatible5G, Adsl, Fibre, AvecEngagement, Annee, DejaClient)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s); SELECT SCOPE_IDENTITY();
         """
-        return self.db_util.insert_and_return_id(query, (OperateurID, limite, unite, compatible5g, adsl, fibre, avecEngagement, annee))
+        return self.db_util.insert_and_return_id(query, (OperateurID, limite, unite, compatible5g, adsl, fibre, avecEngagement, annee, dejaClient))
 
     def insert_into_tarifs(self, ForfaitID, price, date_enregistrement):
         query = """

@@ -9,13 +9,14 @@ CREATE TABLE Operateurs (
 CREATE TABLE Forfaits (
     ForfaitID INT IDENTITY(1,1) PRIMARY KEY,
     OperateurID INT,
-    LimiteDonnees NVARCHAR(50) NOT NULL,
+    Donnees NVARCHAR(50) NOT NULL,
     UniteDonnees NVARCHAR(10) NOT NULL, -- Consider normalization
     Compatible5G BIT NOT NULL DEFAULT 0,
     Adsl BIT NOT NULL DEFAULT 0,
     Fibre BIT NOT NULL DEFAULT 0,
     AvecEngagement BIT NOT NULL DEFAULT 0, -- New column to indicate engagement status
-    Annee NVARCHAR(5) NULL, -- Nullable to accommodate non-engagement packages
+    Annee NVARCHAR(5) NULL,
+    DejaClient BIT NOT NULL DEFAULT 0,
     CONSTRAINT FK_Forfait_OperateurID FOREIGN KEY (OperateurID) REFERENCES Operateurs(OperateurID)
 );
 
