@@ -23,7 +23,7 @@ sys.path.append(parent_dir)
 
 from base_scraper import BaseScraper
 
-class free(BaseScraper):
+class Free(BaseScraper):
     def __init__(self):
         super().__init__("Free")
         logging.info("Initialized Free Scraper Sans Engagement.")
@@ -140,6 +140,6 @@ class free(BaseScraper):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = free()
+    scraper = Free()
     scraper.run()     
  

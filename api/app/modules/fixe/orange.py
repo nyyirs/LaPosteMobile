@@ -19,7 +19,7 @@ sys.path.append(parent_dir)
 
 from base_scraper import BaseScraper
 
-class orange(BaseScraper):
+class Orange(BaseScraper):
     def __init__(self):
         super().__init__("Orange")
         logging.info("Initialized Orange Scraper Fixe.")
@@ -88,7 +88,7 @@ class orange(BaseScraper):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = orange()
+    scraper = Orange()
     scraper.run()                     
 
 

@@ -25,7 +25,7 @@ sys.path.append(parent_dir)
 
 from base_scraper import BaseScraper
 
-class sosh(BaseScraper):
+class Sosh(BaseScraper):
     def __init__(self):
         super().__init__("Sosh")
         logging.info("Initialized Sosh mobile Scraper Fixe.")
@@ -88,6 +88,6 @@ class sosh(BaseScraper):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = sosh()
+    scraper = Sosh()
     scraper.run()           
 

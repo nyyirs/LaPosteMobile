@@ -18,7 +18,7 @@ sys.path.append(parent_dir)
 
 from base_scraper import BaseScraper
 
-class red(BaseScraper):
+class Red(BaseScraper):
     def __init__(self):
         super().__init__("RED")
         logging.info("Initialized RED Scraper Fixe.")
@@ -69,5 +69,5 @@ class red(BaseScraper):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = red()
+    scraper = Red()
     scraper.run()                    

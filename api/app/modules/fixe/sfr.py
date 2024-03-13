@@ -17,7 +17,7 @@ sys.path.append(parent_dir)
 
 from base_scraper import BaseScraper
 
-class sfr(BaseScraper):
+class Sfr(BaseScraper):
     def __init__(self):
         super().__init__("SFR")
         logging.info("Initialized SFR Scraper Fixe.")
@@ -59,6 +59,6 @@ class sfr(BaseScraper):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = sfr()
+    scraper = Sfr()
     scraper.run()                
 

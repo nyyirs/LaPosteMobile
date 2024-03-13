@@ -26,6 +26,13 @@ from modules.forfaits_avec_engagement.lapostemobile import Lapostemobile as Lapo
 from modules.forfaits_avec_engagement.orange import Orange as OrangeAvecEngagement
 from modules.forfaits_avec_engagement.sfr import Sfr as SfrAvecEngagement
 
+from modules.fixe.byou import Byou as ByouFixe
+from modules.fixe.free import Free as FreeFixe
+from modules.fixe.orange import Orange as OrangeFixe
+from modules.fixe.sfr import Sfr as SfrFixe
+from modules.fixe.red import Red as RedFixe
+from modules.fixe.sosh import Sosh as SoshFixe
+
 
 from modules.azure_blob_uploader import AzureBlobUploader
 
@@ -54,10 +61,15 @@ async def run():
         ByouAvecEngagement(), LapostemobileAvecEngagement(),
         OrangeAvecEngagement(), SfrAvecEngagement()
     ]
+    scrapers_fixe = [
+        ByouFixe(), FreeFixe(), RedFixe(), SoshFixe(), OrangeFixe(), SfrFixe()
+    ]
     # Run sans engagement scrapers
     run_scrapers(scrapers_sans_engagement)    
     # Run avec engagement scrapers
     run_scrapers(scrapers_avec_engagement)
+    # Run Fixe scrapers
+    run_scrapers(scrapers_fixe)    
     # Log total errors and upload the log file
     logging.info(f"Total Errors Logged: {error_counter_handler.error_count}\n")    
     uploader = AzureBlobUploader()

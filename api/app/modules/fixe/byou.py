@@ -17,7 +17,7 @@ sys.path.append(parent_dir)
 
 from base_scraper import BaseScraper
 
-class byou(BaseScraper):
+class Byou(BaseScraper):
     def __init__(self):
         super().__init__("B&You")
         logging.info("Initialized B&You Scraper Fixe.")
@@ -94,5 +94,5 @@ class byou(BaseScraper):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    scraper = byou()
+    scraper = Byou()
     scraper.run()     
