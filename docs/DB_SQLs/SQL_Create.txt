@@ -3,7 +3,8 @@ CREATE TABLE Operateurs (
     NomOperateur NVARCHAR(255) NOT NULL,
     URLSansEngagement NVARCHAR(2048) NULL,
     URLAvecEngagement NVARCHAR(2048) NULL,
-    URLFixe NVARCHAR(2048) NULL;
+    URLFixe NVARCHAR(2048) NULL,
+    URLDejaClient NVARCHAR(2048) NULL;
 );
 
 CREATE TABLE Forfaits (
