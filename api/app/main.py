@@ -33,6 +33,12 @@ from modules.fixe.sfr import Sfr as SfrFixe
 from modules.fixe.red import Red as RedFixe
 from modules.fixe.sosh import Sosh as SoshFixe
 
+from modules.deja_client.byou import Byou as ByouDejaClient
+from modules.deja_client.free import Free as FreeDejaClient
+from modules.deja_client.orange import Orange as OrangeDejaClient
+from modules.deja_client.sfr import Sfr as SfrDejaClient
+from modules.deja_client.lapostemobile import Lapostemobile as LapostemobileDejaClient
+
 
 from modules.azure_blob_uploader import AzureBlobUploader
 
@@ -64,12 +70,16 @@ async def run():
     scrapers_fixe = [
         ByouFixe(), FreeFixe(), RedFixe(), SoshFixe(), OrangeFixe(), SfrFixe()
     ]
+    scrapers_deja_client = [
+        ByouDejaClient(), FreeDejaClient(), LapostemobileDejaClient(), OrangeDejaClient(), SfrDejaClient()
+    ]
     # Run sans engagement scrapers
     run_scrapers(scrapers_sans_engagement)    
     # Run avec engagement scrapers
     run_scrapers(scrapers_avec_engagement)
     # Run Fixe scrapers
-    run_scrapers(scrapers_fixe)    
+    run_scrapers(scrapers_fixe)
+    run_scrapers(scrapers_deja_client) 
     # Log total errors and upload the log file
     logging.info(f"Total Errors Logged: {error_counter_handler.error_count}\n")    
     uploader = AzureBlobUploader()
