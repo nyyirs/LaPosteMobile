@@ -124,43 +124,6 @@ class Lapostemobile(BaseScraper):
                 'is_5g': is_5g,
                 'deja_client': 1
                 })
-            
-        WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.ID, "lblSwitch"))
-        ).click()   
-
-        time.sleep(2)
-
-        pattern = re.compile(r"\b\d+(?:Go|Mo)\b")
-
-        # Locate elements by ID
-        name_elements = self.driver.find_elements(By.ID, "imgCaracteristique")
-
-        # Extract matching parts of the 'alt' attribute of each element
-        extracted_names = []
-        for element in name_elements:
-            alt_text = element.get_attribute('alt')  # Get the 'alt' attribute
-            match = pattern.search(alt_text)  # Search for the pattern in the 'alt' text
-            if match:
-                extracted_names.append(match.group(0))  # If a match is found, add it to the list
-
-        price_elements = self.driver.find_elements(By.CSS_SELECTOR, 'div.f12.h20')
-        alt_prices = [element.text.split(':')[1].strip().replace('€', '.').replace('/mois', '') for element in price_elements if element.text]
-
-        pattern_5g = re.compile(r"5G")
-        extracted_5g = [bool(pattern_5g.search(text.get_attribute('alt'))) for text in name_elements if text.get_attribute('alt').strip()]
-
-
-        for name, is_5g, price in zip(extracted_names, extracted_5g, alt_prices):
-            self.plans.append({
-                'Donnees': name[:-2],
-                'unite': name[-2:],
-                'price': price,
-                'avecEngagement': 1, 
-                'is_5g': is_5g,
-                'deja_client': 1
-                }) 
-
         self.driver.quit()
 
     def insert_data(self):
