@@ -10,3 +10,4 @@ fastapi
 uvicorn
 webdriver-manager
 azure-storage-blob
+apify-client
