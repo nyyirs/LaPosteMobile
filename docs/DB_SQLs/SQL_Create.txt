@@ -4,8 +4,12 @@ CREATE TABLE Operateurs (
     URLSansEngagement NVARCHAR(2048) NULL,
     URLAvecEngagement NVARCHAR(2048) NULL,
     URLFixe NVARCHAR(2048) NULL,
-    URLDejaClient NVARCHAR(2048) NULL;
+    URLDejaClient NVARCHAR(2048) NULL,
+    Instagram NVARCHAR(2048) NULL,
+    Facebook NVARCHAR(2048) NULL,
+    Twitter NVARCHAR(2048) NULL
 );
+
 
 CREATE TABLE Forfaits (
     ForfaitID INT IDENTITY(1,1) PRIMARY KEY,
@@ -27,6 +31,19 @@ CREATE TABLE Tarifs (
     Prix MONEY NOT NULL,
     DateEnregistrement DATE NOT NULL,
     CONSTRAINT FK_Tarifs_ForfaitID FOREIGN KEY (ForfaitID) REFERENCES Forfaits(ForfaitID)
+);
+
+CREATE TABLE SocialMediaPosts (
+    SocialMediaId INT IDENTITY(1,1) PRIMARY KEY,
+    PostId INT NOT NULL,
+    PostPlatform NVARCHAR(15) NOT NULL,
+    PostUrl NVARCHAR(2048) NULL,
+    PostCaption NVARCHAR(MAX) NULL,
+    NumberOfLikes INT NULL,
+    NumberOfComments INT NULL,
+    OperateurID INT,
+    FOREIGN KEY (OperateurID) REFERENCES Operateurs(OperateurID),
+    UNIQUE (PostId, PostPlatform)
 );
 
 
